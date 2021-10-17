@@ -1,0 +1,16 @@
+[
+{
+    "arguments": [
+        "/usr/bin/g++",
+        "-c",
+        "--target=x86_64-pc-linux-gnu",
+        "-m64",
+        "-std=gnu++20",
+        "-x",
+        "c++",
+        "/home/mrfluffy/Documents/C++/fsorter/main.cpp"
+    ],
+    "directory": "/home/mrfluffy/Documents/C++/fsorter",
+    "file": "/home/mrfluffy/Documents/C++/fsorter/main.cpp"
+}
+]
