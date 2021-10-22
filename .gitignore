@@ -5,3 +5,4 @@ tmp/
 fsorter
 .ccls-cache/
 CMakeFiles/
+settings.conf
