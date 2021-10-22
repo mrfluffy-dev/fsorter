@@ -7,41 +7,26 @@
 
 namespace fs = std::filesystem;
 std::string settingsPath = "settings.conf";
-std::string musicPath()
-{
-    std::string musicFolder = "";
-    return musicFolder;
-}
+class paths{
+    public:
+        std::string Picturs;
+        std::string Music;
+        std::string Vidios;
+        std::string Arcives;
+};
 
-std::string photoPath()
-{
-    std::string photoFolder = "";
-    return photoFolder;
-}
-
-std::string videoPath()
-{
-    std::string videoFolder = "";
-    return videoFolder;
-}
-
-std::string arcivePath()
-{
-    std::string arciveFolder = "";
-    return arciveFolder;
-}
 void writeSettins()
 {
     std::ofstream settings(settingsPath);
-    settings << "Pictures=\n$HOME/Pictures" << std::endl;
+    settings << "Picture=\n$HOME/Pictures" << std::endl;
     settings << "Music=\n$HOME/Music" << std::endl;
+    settings << "Video=\n$HOME/Videos" << std::endl;
+    settings << "Arcive=\n$HOME/Documents/Compressed" << std::endl;
     settings.close();
-
-    
 }
+
 std::vector<std::string> readSettings()
 {
-
     std::ifstream settings(settingsPath);
     std::vector<std::string> listOfPaths;
     std::string setting;
@@ -59,14 +44,37 @@ std::vector<std::string> readSettings()
     }
     return listOfPaths;
 }
-
+paths declarePaths(std::vector<std::string> listOfPaths)
+{
+    paths Paths;
+    for (int i = 0; i < listOfPaths.size(); i+=2)
+    {
+        listOfPaths[i].pop_back();
+        std::string type = listOfPaths[i];
+        std::string path = listOfPaths[i+1];
+        if(type == "Picture")
+        {
+            Paths.Picturs = path;
+        }
+        else if (type == "Music")
+        {
+            Paths.Music = path;
+        }
+        else if (type == "Video")
+        {
+            Paths.Vidios = path;
+        }
+        else if (type == "Arcive")
+        {
+            Paths.Arcives = path;
+        }
+    }
+    return Paths;
+}
 int main()
 {
     std::vector<std::string> listOfPaths = readSettings();
-    for (int i; i < listOfPaths.size(); i++) {
-        std::string stringItem ="echo " + listOfPaths[1];
-        const char* item = stringItem.c_str();
-        system(item);
-    }
+    paths Paths = declarePaths(listOfPaths);
+    std::cout << Paths.Picturs << std::endl;
     return 0;
 }
