@@ -1,0 +1,5 @@
+#+TITLE: Readme
+#+AUTHOR: Zastian Pretorius
+
+* README
+This is a simple project to help sort your files on linux written in c++.
