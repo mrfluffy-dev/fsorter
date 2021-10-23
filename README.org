@@ -29,11 +29,15 @@ This is a simple project to help sort your files on linux written in c++.
    #+BEGIN_SRC
    cd ~/Downloads
    #+END_SRC
-2. The first time you run the program nothing will happen but a default settings.conf will be generated found in
+2. Run fsorter.
+   #+BEGIN_SRC
+   fsorter
+   #+END_SRC
+3. The first time you run the program nothing will happen but a default settings.conf will be generated found in
    #+BEGIN_SRC
    ~/.config/fsorter/settings.conf
    #+END_SRC
-3. Running fsorter again will sort the current working directory based on the preferences in settings.conf
+4. Running fsorter again will sort the current working directory based on the preferences in settings.conf
 
 * Configure
 1. Open ~/.config/fsorter/settings.conf in your favourite text editor for example.
