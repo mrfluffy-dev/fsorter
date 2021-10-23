@@ -33,10 +33,10 @@ This is a simple project to help sort your files on linux written in c++.
    #+BEGIN_SRC
    ~/.config/fsorter/settings.conf
    #+END_SRC
-3. Running #+BEGIN_SRC fsorter #+END_SRC again will sort the current working directory based on the preferences in settings.conf
+3. Running fsorter again will sort the current working directory based on the preferences in settings.conf
 
 * Configure
-1. Open #+BEGIN_SRC ~/.config/fsorter/settings.conf #+END_SRC in your favourite text editor for example.
+1. Open ~/.config/fsorter/settings.conf in your favourite text editor for example.
    #+BEGIN_SRC
    vim ~/.config/fsorter/settings.conf
    #+END_SRC
@@ -59,12 +59,12 @@ This is a simple project to help sort your files on linux written in c++.
     .iso,
     #+END_SRC
 3. The config file is janky so be careful
-4. An object consists of 3 things first a Type #+BEGIN_SRC Picture= #+END_SRC dont forget the '=' at the end.
-5. second is the path you want to save your files of this type for the Type Picture= in this case it is #+BEGIN_SRC /home/mrfluffy/Pictures/ #+END_SRC dont forget the '/' at the end of path.
-6. The third if the extentions That belong to this type in the case of Type Picture= we have #+BEGIN_SRC .jpg,.jpeg,.png, #+END_SRC take note that the extentions have a '.' before them and they are seperated by a ','
+4. An object consists of 3 things first a Type Picture= dont forget the '=' at the end.
+5. second is the path you want to save your files of this type for the Type Picture= in this case it is /home/mrfluffy/Pictures/ dont forget the '/' at the end of path.
+6. The third if the extentions That belong to this type in the case of Type Picture= we have .jpg,.jpeg,.png, take note that the extentions have a '.' before them and they are seperated by a ','
    Also note that there is a ',' at the end of the line.
 7. If this convention is not followd the program will brake.
 8. You can add your own types at the end of this file. DO NOT leave empty lines.
 9. The Types can be enything as long as it ends with '='.
-10. The path does not need to exist when #+BEGIN_SRC fsorter #+END_SRC is ren it will ask you if you want to create the Directory.
+10. The path does not need to exist when fsorter is ren it will ask you if you want to create the Directory.
 11. Extentions can be anything as long as the convention is followd as shown above.
