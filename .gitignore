@@ -9,3 +9,4 @@ settings.conf
 cmake_install.cmake
 CMakeCache.txt
 Makefile
+install_manifest.txt
