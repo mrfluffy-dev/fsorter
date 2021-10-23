@@ -6,3 +6,6 @@ fsorter
 .ccls-cache/
 CMakeFiles/
 settings.conf
+cmake_install.cmake
+CMakeCach.txt
+Makefile
