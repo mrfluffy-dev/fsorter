@@ -70,5 +70,5 @@ This is a simple project to help sort your files on linux written in c++.
 7. If this convention is not followd the program will brake.
 8. You can add your own types at the end of this file. DO NOT leave empty lines.
 9. The Types can be enything as long as it ends with '='.
-10. The path does not need to exist when fsorter is ren it will ask you if you want to create the Directory.
+10. The path does not need to exist when fsorter is run it will ask you if you want to create the Directory.
 11. Extentions can be anything as long as the convention is followd as shown above.
