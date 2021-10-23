@@ -2,7 +2,6 @@
 #include <filesystem>
 #include <string>
 #include <vector>
-//#include <bits/stdc++.h>
 #include <fstream>
 std::string musicTypes[] = {".mp3",".wav"};
 std::string pictureType[] = {".jpg","jpeg","png"};
@@ -10,6 +9,8 @@ namespace fs = std::filesystem;
 std::string home = getenv("HOME");
 std::string settingsPath = home+"/.config/fsorter/settings.conf";
 std::string sortingPath = fs::current_path();
+
+//createn of the typeAndPath object
 class typeAndPaths{
     public:
         std::string type;
@@ -17,6 +18,7 @@ class typeAndPaths{
         std::vector<std::string> extentions;
 };
 
+//this is just a basic function that will create a basic settings.conf file if it does not exist (it is called by readSettings in the case settings.conf does not exist)
 void writeSettins()
 {
     std::ofstream settings(settingsPath);
@@ -27,6 +29,7 @@ void writeSettins()
     settings.close();
 }
 
+//Reads all the lines in settings.conf and saves them in a vector line by line.
 std::vector<std::string> readSettings()
 {
     if(!fs::exists(settingsPath))
@@ -51,6 +54,8 @@ std::vector<std::string> readSettings()
     settings.close();
     return listOfPaths;
 }
+
+//declarePaths will take a vector of all the text written in settings.conf and devide them in to there respected atrebutes in Object typeAndPath
 std::vector<typeAndPaths> declarePaths(std::vector<std::string> listOfPaths)
 {
     typeAndPaths Paths;
@@ -84,6 +89,9 @@ std::vector<typeAndPaths> declarePaths(std::vector<std::string> listOfPaths)
     }
     return paths;
 }
+
+//this will check if the Folder that is mentiond in the object Paths.path (typeAndPath) exists and if not will prompt the user if they want to create the directory or not
+//if the user says yes the directory will be created.
 void checkSettingsPaths(std::vector<typeAndPaths> Paths)
 {
     for (int i = 0; i < Paths.size(); i++)
@@ -119,6 +127,8 @@ void checkSettingsPaths(std::vector<typeAndPaths> Paths)
     }
 }
 
+//iterates thrue all the files in the given path looks at there respected extention and then moves them to the location found in the Paths.path (typeAndPath) object
+//that is related to the extention that is being sorted..
 void sortPath(std::string path, std::vector<typeAndPaths> Paths)
 {
     for(auto const& file: fs::directory_iterator{path})
