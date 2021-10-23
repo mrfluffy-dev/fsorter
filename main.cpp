@@ -139,6 +139,7 @@ void sortPath(std::string path, std::vector<typeAndPaths> Paths)
                 for (int x = 0; x < Paths[i].extentions.size(); x++) {
                     if(Paths[i].extentions[x] == file.path().extension())
                     {
+                        std::cout << file.path().string() << std::endl;
                         fs::rename(file.path().string(), Paths[i].path + file.path().filename().string());
                     }
                 }
