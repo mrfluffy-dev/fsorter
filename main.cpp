@@ -54,7 +54,6 @@ std::vector<std::string> readSettings()
 std::vector<typeAndPaths> declarePaths(std::vector<std::string> listOfPaths)
 {
     typeAndPaths Paths;
-    std::vector<typeAndPaths> paths;
     for (int i = 0; i < listOfPaths.size(); i+=3)
     {
         listOfPaths[i].pop_back();
@@ -90,7 +89,6 @@ void checkSettingsPaths(std::vector<typeAndPaths> Paths)
     {
         if(fs::exists(Paths[i].path))
         {
-            std::cout << "Yes\n";
         }
         else
         {
