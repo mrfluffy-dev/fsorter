@@ -54,6 +54,7 @@ std::vector<std::string> readSettings()
 std::vector<typeAndPaths> declarePaths(std::vector<std::string> listOfPaths)
 {
     typeAndPaths Paths;
+    std::vector<typeAndPaths> paths;
     for (int i = 0; i < listOfPaths.size(); i+=3)
     {
         listOfPaths[i].pop_back();
@@ -124,7 +125,6 @@ void sortPath(std::string path, std::vector<typeAndPaths> Paths)
     {
         if(file.path().has_extension())
         {
-            std::cout << file.path().extension() << '\n';
             for (int i = 0; i < Paths.size(); i++) {
                 for (int x = 0; x < Paths[i].extentions.size(); x++) {
                     if(Paths[i].extentions[x] == file.path().extension())
