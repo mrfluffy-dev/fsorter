@@ -4,11 +4,11 @@
 * README
 This is a simple project to help sort your files on linux written in c++.
 * Install
-1. Coppy the repo
+1. Copy the repo
     #+BEGIN_SRC
     git clone https://github.com/ZastianPretorius/fsorter.git
     #+END_SRC
-2. cd into the the fsorter folder
+2. cd into  the fsorter folder
     #+BEGIN_SRC
     . cd fsorter
     #+END_SRC
@@ -44,7 +44,7 @@ This is a simple project to help sort your files on linux written in c++.
    #+BEGIN_SRC
    vim ~/.config/fsorter/settings.conf
    #+END_SRC
-2. Here is the basic settings.conf. The name after /home/ will be different then this one it must be your systems username (Running fsorter the first time will generate this for you automaticaly)
+2. Here is the basic settings.conf. The name after /home/ will be different then this one it must be your systems username (Running fsorter the first time will generate this for you automatically)
    #+BEGIN_SRC
     Picture=
     /home/mrfluffy/Pictures/
@@ -63,12 +63,12 @@ This is a simple project to help sort your files on linux written in c++.
     .iso,
     #+END_SRC
 3. The config file is janky so be careful
-4. An object consists of 3 things first a Type Picture= dont forget the '=' at the end.
-5. second is the path you want to save your files of this type for the Type Picture= in this case it is /home/mrfluffy/Pictures/ dont forget the '/' at the end of path.
-6. The third if the extentions That belong to this type in the case of Type Picture= we have .jpg,.jpeg,.png, take note that the extentions have a '.' before them and they are seperated by a ','
+4. An object consists of 3 things first a Type Picture= don't forget the '=' at the end.
+5. second is the path you want to save your files of this type for the Type Picture= in this case it is /home/mrfluffy/Pictures/ don't forget the '/' at the end of path.
+6. The third if the extentions That belong to this type in the case of Type Picture= we have .jpg,.jpeg,.png, take note that the extentions have a '.' before them and they are separated by a ','
    Also note that there is a ',' at the end of the line.
 7. If this convention is not followd the program will brake.
 8. You can add your own types at the end of this file. DO NOT leave empty lines.
-9. The Types can be enything as long as it ends with '='.
-10. The path does not need to exist when fsorter is ren it will ask you if you want to create the Directory.
+9. The Types can be anything as long as it ends with '='.
+10. The path does not need to exist when fsorter is run it will ask you if you want to create the Directory.
 11. Extentions can be anything as long as the convention is followd as shown above.
