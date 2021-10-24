@@ -15,7 +15,7 @@ class typeAndPaths{
     public:
         std::string type;
         std::string path;
-        std::vector<std::string> extentions;
+        std::vector<std::string> extensions;
 };
 
 //this is just a basic function that will create a basic settings.conf file if it does not exist (it is called by readSettings in the case settings.conf does not exist)
@@ -36,22 +36,22 @@ std::vector<std::string> readSettings()
     {
         fs::create_directory(home + "/.config/fsorter/");
     }
-    std::ifstream settings(settingsPath);
+    std::ifstream settingsFile(settingsPath);
     std::vector<std::string> listOfPaths;
     std::string setting;
     // creates a default settins file
-    if(!settings)
+    if(!settingsFile)
     {
         writeSettins();
     }
-    if(settings)
+    if(settingsFile)
     {
-        while(getline(settings, setting))
+        while(getline(settingsFile, setting))
         {
             listOfPaths.push_back(setting);
         }
     }
-    settings.close();
+    settingsFile.close();
     return listOfPaths;
 }
 
@@ -65,13 +65,13 @@ std::vector<typeAndPaths> declarePaths(std::vector<std::string> listOfPaths)
         listOfPaths[i].pop_back();
         Paths.type = listOfPaths[i];
         Paths.path = listOfPaths[i+1];
-        std::string stringExtentions = listOfPaths[i+2];
-        std::vector<std::string> extentions;
-        char temp;
+        std::string stringextensions = listOfPaths[i+2];
+        std::vector<std::string> extensions;
         std::string tempWord;
         int counter = 0;
-        for (int i = 0; i < stringExtentions.size(); i++) {
-            temp = stringExtentions[i];
+        i = 0;
+        while (i < stringextensions.size()) {
+            char temp = stringextensions[i];
             if(temp != ',')
             {
 
@@ -79,13 +79,15 @@ std::vector<typeAndPaths> declarePaths(std::vector<std::string> listOfPaths)
             }
             else
             {
-                extentions.push_back(tempWord);
+                extensions.push_back(tempWord);
                 tempWord = "";
                 counter++;
             }
+            i++;
         }
-        Paths.extentions = extentions;
+        Paths.extensions = extensions;
         paths.push_back(Paths);
+
     }
     return paths;
 }
@@ -96,31 +98,28 @@ void checkSettingsPaths(std::vector<typeAndPaths> Paths)
 {
     for (int i = 0; i < Paths.size(); i++)
     {
-        if(fs::exists(Paths[i].path))
-        {
-        }
-        else
+        if(!fs::exists(Paths[i].path))
         {
             bool valid = false;
             while (!valid) {
-                char awnser;
-                std::cout << "would you like to create y=yes, n=no : " << Paths[i].path << "\t";
-                std::cin >> awnser;
+                char answer;
+                std::cout << "Would you like to create (y/n) : " << Paths[i].path << "? \t";
+                std::cin >> answer;
                 std::cout << '\n';
-                if(tolower(awnser) == 'y')
+                if(tolower(answer) == 'y')
                 {
                     fs::create_directory(Paths[i].path);
-                    std::cout << "Directorry " << Paths[i].path << " was created\n";
+                    std::cout << "Directory " << Paths[i].path << " was created.\n";
                     valid = true;
                 }
-                else if (tolower(awnser) == 'n')
+                else if (tolower(answer) == 'n')
                 {
-                    std::cout << "Directory" << Paths[i].path <<" was not created\n";
+                    std::cout << "Directory" << Paths[i].path <<" was not created!\n";
                     valid = true;
                 }
                 else
                 {
-                    std::cout << "pleas provide valid awnser" << std::endl;
+                    std::cout << "Please provide a valid answer!" << std::endl;
                 }
             }
         }
@@ -136,8 +135,8 @@ void sortPath(std::string path, std::vector<typeAndPaths> Paths)
         if(file.path().has_extension())
         {
             for (int i = 0; i < Paths.size(); i++) {
-                for (int x = 0; x < Paths[i].extentions.size(); x++) {
-                    if(Paths[i].extentions[x] == file.path().extension())
+                for (int x = 0; x < Paths[i].extensions.size(); x++) {
+                    if(Paths[i].extensions[x] == file.path().extension())
                     {
                         std::cout << file.path().string() << std::endl;
                         fs::rename(file.path().string(), Paths[i].path + file.path().filename().string());
