@@ -40,6 +40,8 @@ void writeSettins()
     settings << "path = " << "\"" << home << "/Documents/Compressed/\"" << std::endl;
     settings << "extensions = [\".zip\",\".rar\",\".7z\"]";
     settings.close();
+    std::cout << "settings.toml made in " << settingsPath << std::endl;
+    exit(0);
 }
 
 //Reads all the lines in settings.toml and saves them in a vector line by line.
