@@ -2,7 +2,7 @@
 #+AUTHOR: Zastian Pretorius
 
 * README
-This is a simple project to help sort your files on linux written in c++.
+This is a simple project to help sort your files on Linux written in c++.
 * Install
 1. Copy the repo
     #+BEGIN_SRC
@@ -33,42 +33,32 @@ This is a simple project to help sort your files on linux written in c++.
    #+BEGIN_SRC
    fsorter
    #+END_SRC
-3. The first time you run the program nothing will happen but a default settings.conf will be generated found in
+3. The first time you run the program nothing will happen but a default settings.toml will be generated found in
    #+BEGIN_SRC
-   ~/.config/fsorter/settings.conf
+   ~/.config/fsorter/settings.toml
    #+END_SRC
-4. Running fsorter again will sort the current working directory based on the preferences in settings.conf
+4. Running fsorter again will sort the current working directory based on the preferences in settings.toml
 
 * Configure
 1. Open ~/.config/fsorter/settings.conf in your favourite text editor for example.
    #+BEGIN_SRC
    vim ~/.config/fsorter/settings.conf
    #+END_SRC
-2. Here is the basic settings.conf. The name after /home/ will be different then this one it must be your systems username (Running fsorter the first time will generate this for you automatically)
+2. Here is the basic settings.toml. The name after /home/ will be different then this one it must be your systems username (Running fsorter the first time will generate this for you automatically)
    #+BEGIN_SRC
-    Picture=
-    /home/mrfluffy/Pictures/
-    .jpg,.jpeg,.png,
-    Music=
-    /home/mrfluffy/Music/
-    .mp3,.wav,
-    Video=
-    /home/mrfluffy/Videos/
-    .mp4,
-    Arcive=
-    /home/mrfluffy/Documents/Compressed/
-    .zip,.rar,.7z,
-    ISO=
-    /home/mrfluffy/Documents/ios/
-    .iso,
+   [Picture]
+   path = "/home/mrfluffy/Pictures/"
+   extensions = [".jpg",".jpeg",".png"]
+   [Music]
+   path = "/home/mrfluffy/Music/"
+   extensions = [".mp3",".wav"]
+   [Video]
+   path = "/home/mrfluffy/Videos/"
+   extensions = [".mp4"]
+   [Arcive]
+   path = "/home/mrfluffy/Documents/Compressed/"
+   extensions = [".zip",".rar",".7z"]
     #+END_SRC
-3. The config file is janky so be careful
-4. An object consists of 3 things first a Type Picture= don't forget the '=' at the end.
-5. second is the path you want to save your files of this type for the Type Picture= in this case it is /home/mrfluffy/Pictures/ don't forget the '/' at the end of path.
-6. The third if the extentions That belong to this type in the case of Type Picture= we have .jpg,.jpeg,.png, take note that the extentions have a '.' before them and they are separated by a ','
-   Also note that there is a ',' at the end of the line.
-7. If this convention is not followd the program will brake.
-8. You can add your own types at the end of this file. DO NOT leave empty lines.
-9. The Types can be anything as long as it ends with '='.
-10. The path does not need to exist when fsorter is run it will ask you if you want to create the Directory.
-11. Extentions can be anything as long as the convention is followd as shown above.
+3. [Picture] is an example of a category. This can be what ever you want to call it.
+4. path = "/home/mrfluffy/Pictures/" is the path you want to save all the files that fall in to this category.
+5. extensions = [".jpg",".jpeg",".png"] is all the extensions of files that fall under this category.
