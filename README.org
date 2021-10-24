@@ -10,7 +10,7 @@ This is a simple project to help sort your files on linux written in c++.
     #+END_SRC
 2. cd into  the fsorter folder
     #+BEGIN_SRC
-    . cd fsorter
+    cd fsorter
     #+END_SRC
 3. Generate a make files
     #+BEGIN_SRC
