@@ -3,12 +3,17 @@
 #include <string>
 #include <vector>
 #include <fstream>
+// making use of https://marzer.github.io/tomlplusplus/ to handle toml files
+#include "libs/toml.hpp"
+using namespace std::string_view_literals;
+
 std::string musicTypes[] = {".mp3",".wav"};
 std::string pictureType[] = {".jpg","jpeg","png"};
 namespace fs = std::filesystem;
 std::string home = getenv("HOME");
-std::string settingsPath = home+"/.config/fsorter/settings.conf";
+std::string settingsPath = home+"/.config/fsorter/settings.toml";
 std::string sortingPath = fs::current_path();
+
 
 //createn of the typeAndPath object
 class typeAndPaths{
@@ -18,20 +23,30 @@ class typeAndPaths{
         std::vector<std::string> extensions;
 };
 
-//this is just a basic function that will create a basic settings.conf file if it does not exist (it is called by readSettings in the case settings.conf does not exist)
+//this is just a basic function that will create a basic settings.toml file if it does not exist (it is called by readSettings in the case settings.conf does not exist)
 void writeSettins()
 {
     std::ofstream settings(settingsPath);
-    settings << "Picture=\n"+ home +"/Pictures/\n.jpg,.jpeg,.png," << std::endl;
-    settings << "Music=\n"+home+"/Music/\n.mp3,.wav," << std::endl;
-    settings << "Video=\n"+home+"/Videos/\n.mp4," << std::endl;
-    settings << "Arcive=\n"+home+"/Documents/Compressed/\n.zip,.rar,.7z," << std::endl;
+    settings << "[Picture]" << std::endl;
+    settings << "path = " << "\"" << home << "/Pictures/\"" << std::endl;
+    settings << "extensions = [\".jpg\",\".jpeg\",\".png\"]" << std::endl;
+    settings << "[Music]" << std::endl;
+    settings << "path = " << "\"" << home << "/Music/\"" << std::endl;
+    settings << "extensions = [\".mp3\",\".wav\"]" << std::endl;
+    settings << "[Video]" << std::endl;
+    settings << "path = " << "\"" << home << "/Videos/\"" << std::endl;
+    settings << "extensions = [\".mp4\"]" << std::endl;
+    settings << "[Arcive]" << std::endl;
+    settings << "path = " << "\"" << home << "/Documents/Compressed/\"" << std::endl;
+    settings << "extensions = [\".zip\",\".rar\",\".7z\"]";
     settings.close();
 }
 
-//Reads all the lines in settings.conf and saves them in a vector line by line.
-std::vector<std::string> readSettings()
+//Reads all the lines in settings.toml and saves them in a vector line by line.
+std::vector<typeAndPaths> readSettings()
 {
+    std::vector<typeAndPaths> paths;
+    typeAndPaths Paths;
     if(!fs::exists(settingsPath))
     {
         fs::create_directory(home + "/.config/fsorter/");
@@ -46,51 +61,39 @@ std::vector<std::string> readSettings()
     }
     if(settingsFile)
     {
-        while(getline(settingsFile, setting))
+        settingsFile.close();
+        toml::table tbl;
+        try
         {
-            listOfPaths.push_back(setting);
+            tbl = toml::parse_file(settingsPath);
+        }
+        catch (const toml::parse_error& err)
+        {
+            std::cerr
+            << "Error parsing file '" << *err.source().path
+            << "':\n" << err.description()
+            << "\n  (" << err.source().begin << ")\n";
+            exit(0);
+        }
+        for(auto it = tbl.begin(); it != tbl.end(); ++it)
+        {
+            Paths.type = it->first;
+            Paths.path = tbl[it->first]["path"].ref<std::string>();
+            std::vector<std::string> extensions;
+            for(int i = 0 ; i < tbl[it->first]["extensions"].as_array()->size(); i++)
+            {
+                std::string ext = tbl[it->first]["extensions"][i].ref<std::string>();
+                extensions.push_back(ext);
+            }
+            Paths.extensions = extensions;
+            paths.push_back(Paths);
         }
     }
     settingsFile.close();
-    return listOfPaths;
-}
-
-//declarePaths will take a vector of all the text written in settings.conf and devide them in to there respected atrebutes in Object typeAndPath
-std::vector<typeAndPaths> declarePaths(std::vector<std::string> listOfPaths)
-{
-    typeAndPaths Paths;
-    std::vector<typeAndPaths> paths;
-    for (int i = 0; i < listOfPaths.size(); i+=3)
-    {
-        listOfPaths[i].pop_back();
-        Paths.type = listOfPaths[i];
-        Paths.path = listOfPaths[i+1];
-        std::string stringextensions = listOfPaths[i+2];
-        std::vector<std::string> extensions;
-        std::string tempWord;
-        int counter = 0;
-        i = 0;
-        while (i < stringextensions.size()) {
-            char temp = stringextensions[i];
-            if(temp != ',')
-            {
-
-                tempWord.push_back(temp);
-            }
-            else
-            {
-                extensions.push_back(tempWord);
-                tempWord = "";
-                counter++;
-            }
-            i++;
-        }
-        Paths.extensions = extensions;
-        paths.push_back(Paths);
-
-    }
     return paths;
 }
+
+
 
 //this will check if the Folder that is mentiond in the object Paths.path (typeAndPath) exists and if not will prompt the user if they want to create the directory or not
 //if the user says yes the directory will be created.
@@ -150,11 +153,8 @@ void sortPath(std::string path, std::vector<typeAndPaths> Paths)
 
 int main()
 {
-    std::vector<std::string> listOfPaths = readSettings();
-    std::vector<typeAndPaths> Paths = declarePaths(listOfPaths);
-    checkSettingsPaths(Paths);
-    sortPath(sortingPath, Paths);
+    std::vector<typeAndPaths> TypesAndPaths = readSettings();
+    checkSettingsPaths(TypesAndPaths);
+    sortPath(sortingPath, TypesAndPaths);
     return 0;
 }
-
-
