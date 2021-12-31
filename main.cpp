@@ -45,7 +45,7 @@ void writeSettins()
 }
 
 //Reads all the lines in settings.toml and saves them in a vector line by line.
-std::vector<typeAndPaths> readSettings()
+std::vector<typeAndPaths> readSettings(std::vector<std::string> ignoreList)
 {
     std::vector<typeAndPaths> paths;
     typeAndPaths Paths;
@@ -79,16 +79,28 @@ std::vector<typeAndPaths> readSettings()
         }
         for(auto it = tbl.begin(); it != tbl.end(); ++it)
         {
-            Paths.type = it->first;
-            Paths.path = tbl[it->first]["path"].ref<std::string>();
-            std::vector<std::string> extensions;
-            for(int i = 0 ; i < tbl[it->first]["extensions"].as_array()->size(); i++)
-            {
-                std::string ext = tbl[it->first]["extensions"][i].ref<std::string>();
-                extensions.push_back(ext);
+            std::cout << ignoreList.size() << std::endl;
+            bool allow = true;
+            for (int e = 0; e < ignoreList.size(); e++) {
+                if (ignoreList[e] == std::string(it->first))
+                {
+                    allow = false;
+                    break;
+                }
             }
-            Paths.extensions = extensions;
-            paths.push_back(Paths);
+            if (allow == true)
+            {
+                Paths.type = it->first;
+                Paths.path = tbl[it->first]["path"].ref<std::string>();
+                std::vector<std::string> extensions;
+                for(int i = 0 ; i < tbl[it->first]["extensions"].as_array()->size(); i++)
+                {
+                    std::string ext = tbl[it->first]["extensions"][i].ref<std::string>();
+                    extensions.push_back(ext);
+                }
+                Paths.extensions = extensions;
+                paths.push_back(Paths);
+            }
         }
     }
     settingsFile.close();
@@ -153,10 +165,19 @@ void sortPath(std::string path, std::vector<typeAndPaths> Paths)
     }
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-    std::vector<typeAndPaths> TypesAndPaths = readSettings();
+    int i = 0;
+    std::vector<std::string> ignoreList;
+    for (i = 0; i < argc; i++)
+    {
+        if (std::string(argv[i]) == "-i") {
+            ignoreList.push_back(argv[i+1]);
+        }
+    }
+    std::vector<typeAndPaths> TypesAndPaths = readSettings(ignoreList);
     checkSettingsPaths(TypesAndPaths);
     sortPath(sortingPath, TypesAndPaths);
+
     return 0;
 }
