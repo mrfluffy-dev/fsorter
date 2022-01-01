@@ -16,7 +16,8 @@ std::string sortingPath = fs::current_path();
 
 
 //createn of the typeAndPath object
-class typeAndPaths{
+class typeAndPaths
+{
     public:
         std::string type;
         std::string path;
@@ -81,7 +82,8 @@ std::vector<typeAndPaths> readSettings(std::vector<std::string> ignoreList)
         {
             std::cout << ignoreList.size() << std::endl;
             bool allow = true;
-            for (int e = 0; e < ignoreList.size(); e++) {
+            for (int e = 0; e < ignoreList.size(); e++)
+            {
                 if (ignoreList[e] == std::string(it->first))
                 {
                     allow = false;
@@ -151,8 +153,10 @@ void sortPath(std::string path, std::vector<typeAndPaths> Paths)
     {
         if(file.path().has_extension())
         {
-            for (int i = 0; i < Paths.size(); i++) {
-                for (int x = 0; x < Paths[i].extensions.size(); x++) {
+            for (int i = 0; i < Paths.size(); i++)
+            {
+                for (int x = 0; x < Paths[i].extensions.size(); x++)
+                {
                     if(Paths[i].extensions[x] == file.path().extension())
                     {
                         std::cout << file.path().string() << std::endl;
@@ -161,7 +165,6 @@ void sortPath(std::string path, std::vector<typeAndPaths> Paths)
                 }
             }
         }
-
     }
 }
 
@@ -171,7 +174,8 @@ int main(int argc, char *argv[])
     std::vector<std::string> ignoreList;
     for (i = 0; i < argc; i++)
     {
-        if (std::string(argv[i]) == "-i") {
+        if (std::string(argv[i]) == "-i")
+        {
             ignoreList.push_back(argv[i+1]);
         }
     }
