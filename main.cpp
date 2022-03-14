@@ -80,7 +80,7 @@ std::vector<typeAndPaths> readSettings(std::vector<std::string> ignoreList)
         }
         for(auto it = tbl.begin(); it != tbl.end(); ++it)
         {
-            std::cout << ignoreList.size() << std::endl;
+            //std::cout << ignoreList.size() << std::endl;
             bool allow = true;
             for (int e = 0; e < ignoreList.size(); e++)
             {
